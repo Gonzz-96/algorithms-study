@@ -1,7 +1,7 @@
 package dev.gonz.algorithmsstudy.datastructures
 
 interface Heap {
-    val heapSize: Int
+    var heapSize: Int
     val array: IntArray
 
     fun parentOf(i: Int): Int
@@ -15,7 +15,7 @@ class HeapImpl(
     override val array: IntArray = intArrayOf(),
 ) : Heap {
 
-    override val heapSize = array.size
+    override var heapSize = array.size
 
     override fun parentOf(i: Int) = (i - 1) / 2
 
@@ -35,6 +35,7 @@ class HeapImpl(
         array[i]
 }
 
+// functions making a heap comply to the max-heap property
 fun maxHeapify(A: Heap, index: Int) {
     val l = A.leftOf(index)
     val r = A.rightOf(index)
@@ -53,4 +54,22 @@ fun maxHeapify(A: Heap, index: Int) {
         A.exchange(index, largest)
         maxHeapify(A, largest)
     }
+}
+
+// function transforming an array to a heap
+fun buildMaxHeap(A: Heap) {
+    for (i in A.heapSize / 2 downTo 0) {
+        maxHeapify(A, i)
+    }
+}
+
+// function implementing heapsort
+fun heapsort(A: Heap): IntArray {
+    buildMaxHeap(A)
+    for (i in (A.array.size - 1) downTo 1) {
+        A.exchange(0, i)
+        A.heapSize -= 1
+        maxHeapify(A, 0)
+    }
+    return A.array
 }

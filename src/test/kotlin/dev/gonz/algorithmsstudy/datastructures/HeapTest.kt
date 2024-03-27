@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
+import kotlin.test.assertSame
 
 class HeapTest {
 
@@ -47,5 +48,32 @@ class HeapTest {
             intArrayOf(16, 14, 10, 8, 7, 9, 3, 2, 4, 1),
             underTest.array,
         )
+    }
+
+    @Test
+    fun `building a max-heap from a random array`() {
+        val array = intArrayOf(4, 1, 3, 2, 16, 9, 10, 14, 8, 7)
+        val underTest = HeapImpl(array)
+
+        buildMaxHeap(underTest)
+
+        assertContentEquals(
+            intArrayOf(16, 14, 10, 8, 7, 9, 3, 2, 4, 1),
+            underTest.array,
+        )
+    }
+
+    @Test
+    fun `getting a sorted array of of maxHeapify and buildMaxHeap functions`() {
+        val array = intArrayOf(16, 14, 10, 8, 7, 9, 3, 2, 4, 1)
+        val underTest = HeapImpl(array)
+
+        val result = heapsort(underTest)
+
+        assertContentEquals(
+            intArrayOf(1, 2, 3, 4, 7, 8, 9, 10, 14, 16),
+            result,
+        )
+        assertSame(underTest.array, result)
     }
 }
