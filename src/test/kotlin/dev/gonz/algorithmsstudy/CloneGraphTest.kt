@@ -29,24 +29,24 @@ class CloneGraphTest {
             }
             for (neighbourO in currentO.neighbours) {
                 if (neighbourO !in originalQueue && neighbourO.value !in visitedValues) {
-                    originalQueue.push(neighbourO)
+                    originalQueue.enqueue(neighbourO)
                 }
             }
             for (neighbourC in currentC.neighbours) {
                 if (neighbourC !in copyQueue && neighbourC.value !in visitedValues) {
-                    copyQueue.push(neighbourC)
+                    copyQueue.enqueue(neighbourC)
                 }
             }
             return if (originalQueue.isEmpty() && copyQueue.isEmpty()) {
                 true
             } else {
-                bfs(originalQueue.pop(), copyQueue.pop())
+                bfs(originalQueue.dequeue(), copyQueue.dequeue())
             }
         }
 
         return bfs(original, copy)
     }
 
-    private fun ArrayDeque<Node>.push(node: Node) = addLast(node)
-    private fun ArrayDeque<Node>.pop() = removeFirst()
+    private fun ArrayDeque<Node>.enqueue(node: Node) = addLast(node)
+    private fun ArrayDeque<Node>.dequeue() = removeFirst()
 }
