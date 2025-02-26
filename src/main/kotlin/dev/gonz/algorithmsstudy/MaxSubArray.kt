@@ -16,9 +16,11 @@ fun findMaxSubArray(array: IntArray, startIndex: Int = 0, endIndex: Int = array.
     val (rightLow, rightHigh, rightSum) = findMaxSubArray(array, middleIndex+1, endIndex)
     val (crossLow, crossHigh, crossSum) = findMaxCrossingSubArray(array, startIndex, middleIndex, endIndex)
 
-    if (leftSum >= rightSum && leftSum >= crossSum) return MaxSubArray(leftLow, leftHigh, leftSum)
-    if (rightSum >= leftSum && rightSum >= crossSum) return MaxSubArray(rightLow, rightHigh, rightSum)
-    return MaxSubArray(crossLow, crossHigh, crossSum)
+    return when  {
+        leftSum >= rightSum && leftSum >= crossSum -> MaxSubArray(leftLow, leftHigh, leftSum)
+        rightSum >= leftSum && rightSum >= crossSum -> MaxSubArray(rightLow, rightHigh, rightSum)
+        else -> MaxSubArray(crossLow, crossHigh, crossSum)
+    }
 }
 
 private fun findMaxCrossingSubArray(array: IntArray, startIndex: Int, middleIndex: Int, endIndex: Int): MaxSubArray {
